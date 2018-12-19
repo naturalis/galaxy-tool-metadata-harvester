@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tool id="getMetaData" name="Harvest Meta Data:" version="0.1.0">
+    <description>
+        Use a python script to utilize the Naturalis, BOLD and ALA api's to
+        collect meta data.
+    </description>
+    <!-- Call the getMetaData script, set input parameters according to user
+         choices. -->
+    <command interpreter="bash">
+        getMetaData.sh -p ${fisProcess.rbProcess} -f ${fisInput.rbInput}
+        #if $fisProcess.rbProcess == "occurrences"
+            -o $fosOccurrences
+        #elif $fisProcess.rbProcess == "pictures"
+            -o $fosPictures
+        #end if
+        #if $fisInput.rbInput == "otu_old"
+            -i $fisInput.fisOtuOld
+        #elif $fisInput.rbInput == "otu_new"
+            -i $fisInput.fisOtuNew
+        #elif $fisInput.rbInput == "lca"
+            -i $fisInput.fisLca
+        #elif $fisInput.rbInput == "accepted"
+            -i $fisInput.fisAccepted
+        #elif $fisInput.rbInput == "blast"
+            -i $fisInput.fisBlast
+        #end if
+    </command>
+    <inputs>
+        <!-- Catch the input process. -->
+        <conditional name="fisProcess">
+            <param name="rbProcess" type="select" label="Occurrence or pictures?"
+                   multiple="false">
+                <option value="occurrences" selected="true">Occurrence status</option>
+                <option value="pictures">Picture collection</option>
+            </param>
+        </conditional>
+        <!-- Catch the input file. -->
+        <conditional name="fisInput">
+            <param name="rbInput" type="select" label="OTU, BLAST or LCA?"
+                   multiple="false">
+                <option value="otu_old">OTU file + old BLAST</option>
+                <option value="otu_new" selected="true">OTU file + new BLAST</option>
+                <option value="lca">OTU file + LCA</option>
+                <option value="accepted">Accepted taxonomic name list</option>
+                <option value="blast">BLAST file</option>
+            </param>
+            <!-- Catch the single input file -->
+            <when value="otu_old">
+                <param name="fisOtuOld" type="data" format="tabular"
+                       label="OTU file + old BLAST."/>
+            </when>
+            <!-- Catch the single input file -->
+            <when value="otu_new">
+                <param name="fisOtuNew" type="data" format="tabular"
+                       label="OTU file + new BLAST."/>
+            </when>
+            <!-- Catch the single input file -->
+            <when value="lca">
+                <param name="fisLca" type="data" format="tabular"
+                       label="OTU file + lca."/>
+            </when>
+            <!-- Catch the single input file -->
+            <when value="accepted">
+                <param name="fisAccepted" type="data" format="tabular"
+                       label="Accepted taxonomic name list."/>
+            </when>
+            <!-- Catch the single input file -->
+            <when value="blast">
+                <param name="fisBlast" type="data" format="tabular"
+                       label="BLAST file."/>
+            </when>
+        </conditional>
+    </inputs>
+    <outputs>
+        <!-- Catch the output file. -->
+        <data format="tabular" name="fosOccurrences" label="Occurrence_Status">
+            <filter>fisProcess["rbProcess"] == "occurrences"</filter>
+        </data>
+        <data format="zip" name="fosPictures" label="Pictures">
+            <filter>fisProcess["rbProcess"] == "pictures"</filter>
+        </data>
+    </outputs>
+    <tests>
+    </tests>
+    <help>
+        .. class:: infomark
+
+        The MetaData tool will utilize the Naturalis, BOLD and ALA api's to
+        collect meta data such as occurrence status and images based on BLAST
+        identifications or accepted taxonomic names.
+
+        .. class:: warningmark
+
+        Definitions for all occurrence status codes can be found on this page:
+        https://www.nederlandsesoorten.nl/content/occurrence-status
+
+        .. class:: warningmark
+
+        Sample names can not start with a "#".
+        All columns in a OTU table should have a header starting with "#".
+
+--------
+
+        Source(s):
+            - Naturalis website at 
+              http://docs.biodiversitydata.nl/en/latest/introduction/
+            - Nederlands Soortenregister website at
+              https://www.nederlandsesoorten.nl/
+            - **Ratnasingham S, Hebert PDN**, BOLD: The Barcode of Life Data
+              System.
+              Molecular Ecology Notes. 2007; 7(3).
+              **doi: 10.1111/j.1471-8286.2007.01678.x**
+              http://www.boldsystems.org/index.php/resources/api
+            - Atlas of Living Australia website at https://api.ala.org.au/
+    </help>
+</tool>
