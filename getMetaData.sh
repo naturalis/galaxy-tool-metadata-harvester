@@ -9,7 +9,7 @@
 # - sudo pip install pandas
 
 # Galaxy prequisites:
-# - sudo ln -s /path/to/folder/galaxy-tool-metadata/getMetaData.py 
+# - sudo ln -s /path/to/folder/galaxy-tool-metadata-harvester/getMetaData.py 
 #              /usr/local/bin/getMetaData.py
 
 # The getFormatFlow function.
