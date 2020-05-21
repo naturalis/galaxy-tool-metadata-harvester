@@ -1,4 +1,7 @@
 # galaxy-tool-metadata-harvester
+
+__!!Repo can be deleted, copy is also kept [here](https://github.com/JasperBoom/galaxy-tools-naturalis-internship)!!.__
+
 Use a python script to utilize the Naturalis, BOLD and ALA api's to collect meta data.  
 The MetaData tool will utilize the Naturalis, BOLD and ALA api's to collect meta data such as occurrence status and images based on BLAST identifications or accepted taxonomic names.
 
@@ -44,13 +47,30 @@ Edit the following file in order to make galaxy display the tool.
 ```
 
 ## Source(s)
-* Naturalis website at http://docs.biodiversitydata.nl/en/latest/introduction/
-* Nederlands Soortenregister website at https://www.nederlandsesoorten.nl/
-* __Ratnasingham S, Hebert PDN__, BOLD: The Barcode of Life Data System.  
+* Naturalis API [website](http://docs.biodiversitydata.nl/en/latest/introduction/)
+* Nederlands Soortenregister [website](https://www.nederlandsesoorten.nl/)
+* Atlas of Living Australia API [website](https://api.ala.org.au/)
+* __Ratnasingham S, Hebert PDN__,  
+  BOLD: The Barcode of Life Data System.  
   Molecular Ecology Notes. 2007; 7(3). __doi: 10.1111/j.1471-8286.2007.01678.x__  
   [BOLD](http://www.boldsystems.org/index.php/resources/api)
-* Atlas of Living Australia website at https://api.ala.org.au/
 * __Giardine B, Riemer C, Hardison RC, Burhans R, Elnitski L, Shah P__,  
   Galaxy: A platform for interactive large-scale genome analysis.  
-  Genome Research. 2005; 15(10) 1451-1455 __doi: 10.1101/gr.4086505__  
-  [GALAXY](https://www.galaxyproject.org/)
+  Genome Research. 2005; 15(10) 1451-1455. __doi: 10.1101/gr.4086505__  
+  [Galaxy](https://www.galaxyproject.org/)
+
+```
+Copyright (C) 2018 Jasper Boom
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License version 3 as
+published by the Free Software Foundation.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program. If not, see <https://www.gnu.org/licenses/>.
+```
