@@ -15,35 +15,36 @@
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 # Prequisites:
-# - sudo apt-get install python
-# - sudo apt-get install python-pip
-# - sudo pip install pandas
-
-# Galaxy prequisites:
-# - sudo ln -s /path/to/folder/galaxy-tool-metadata-harvester/getMetaData.py 
-#              /usr/local/bin/getMetaData.py
+# - Conda environment python >= 3.7
+# - conda install -c anaconda pandas
 
 # The getFormatFlow function.
 # This function creates a temporary storage directory in the output directory.
 # It then calls the getMetaData.py script with the correct input values.
 # After the script is finished, output is send to the expected location and
 # the temporary storage directory is deleted.
+
+SCRIPTDIR=$(dirname "$(readlink -f "$0")")
+
 getFormatFlow() {
+    strDirectory_temp=$(mktemp -d /media/GalaxyData/database/files/XXXXXX)
     strDirectory=${fosOutput::-4}
-    mkdir -p "${strDirectory}_temp"
+	echo "Output Directory from sh:"
+	echo "$strDirectory_temp"
+#    mkdir -p "${strDirectory}_temp"
     if [ "${disProcess}" = "occurrences" ]
     then
-        getMetaData.py -i ${fisInput} -o ${strDirectory}_temp/ \
+        python $SCRIPTDIR"/getMetaData.py" -i ${fisInput} -o ${strDirectory_temp}/ \
                        -p ${disProcess} -f ${disFormat}
-        cat ${strDirectory}_temp/flNewOutput.tabular > ${fosOutput}
-        rm -rf ${strDirectory}_temp
+        cat ${strDirectory_temp}/flNewOutput.tabular > ${fosOutput}
+        rm -rf ${strDirectory_temp}
     elif [ "${disProcess}" = "pictures" ]
     then
-        getMetaData.py -i ${fisInput} -o ${strDirectory}_temp/ \
+        python $SCRIPTDIR"/getMetaData.py" -i ${fisInput} -o ${strDirectory_temp}/ \
                        -p ${disProcess} -f ${disFormat}
-        zip -jqr ${strDirectory}_temp/flImageZip.zip ${strDirectory}_temp/*
-        cat ${strDirectory}_temp/flImageZip.zip > ${fosOutput}
-        rm -rf ${strDirectory}_temp
+        zip -jqr ${strDirectory_temp}/flImageZip.zip ${strDirectory_temp}/*
+        cat ${strDirectory_temp}/flImageZip.zip > ${fosOutput}
+        rm -rf ${strDirectory_temp}
     fi
 }
 
