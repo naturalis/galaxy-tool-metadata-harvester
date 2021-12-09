@@ -14,16 +14,22 @@ You should have received a copy of the GNU Affero General Public License
 along with this program. If not, see <https://www.gnu.org/licenses/>.
 -->
 
-<?xml version="1.0" encoding="utf-8"?>
-<tool id="getMetaData" name="Harvest Meta Data:" version="0.1.0">
+<!-- ?xml version="1.0" encoding="utf-8"?-->
+<tool id="getMetaData" name="Harvest Meta Data" version="0.1.0">
     <description>
         Use a python script to utilize the Naturalis, BOLD and ALA api's to
         collect meta data.
     </description>
+
+    <requirements>
+        <requirement type="package" version="2.7">python</requirement>
+        <requirement type="package">pandas</requirement>
+    </requirements>
     <!-- Call the getMetaData script, set input parameters according to user
          choices. -->
-    <command interpreter="bash">
-        getMetaData.sh -p ${fisProcess.rbProcess} -f ${fisInput.rbInput}
+
+    <command><![CDATA[
+        bash '$__tool_directory__/getMetaData.sh' -p ${fisProcess.rbProcess} -f ${fisInput.rbInput}
         #if $fisProcess.rbProcess == "occurrences"
             -o $fosOccurrences
         #elif $fisProcess.rbProcess == "pictures"
@@ -40,7 +46,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
         #elif $fisInput.rbInput == "blast"
             -i $fisInput.fisBlast
         #end if
-    </command>
+    ]]></command>
     <inputs>
         <!-- Catch the input process. -->
         <conditional name="fisProcess">
